@@ -6,9 +6,12 @@
 #include <iostream>
 #include <cstring>
 #include <unistd.h>
+#include <vector>
 
 #define DATA "LoremIpsumLoremIpsumLoremIpsum"
+#define BUFSIZE 1000000
 
+// client [hostname eg. ip] [hostport] [mode]
 int main(int argc, char *argv[])
 {
     int sock;
@@ -31,9 +34,34 @@ int main(int argc, char *argv[])
     name.sin_family = AF_INET;
     name.sin_port = htons( atoi( argv[2] ));
 
-    if(sendto(sock, DATA, sizeof DATA, 0, (struct sockaddr*) &name, sizeof name) == -1){
-        std::cerr << "Sending datagram message" <<std::endl;
+    if(atoi(argv[3]) == 1){
+        if(sendto(sock, DATA, sizeof DATA, 0, (struct sockaddr*) &name, sizeof name) == -1){
+            std::cerr << "Sending datagram message" <<std::endl;
+        }
+        char buffer[1024];
+        socklen_t size = sizeof(name);
+        recvfrom(sock, buffer, 1024, 0, (struct sockaddr*)&name, &size);
+        printf("[+]Data recv: %s\n", buffer);
     }
+
+    if(atoi(argv[3]) == 2){
+        char buf[BUFSIZE];
+        buf[0] = 'X';
+        int size = 1;
+        while(sendto(sock, buf, size, 0, (struct sockaddr*) &name, sizeof name) != -1){
+            size++;
+            if(size % 5000 == 0)
+                std::cerr << "Transmition cap: " << size << "B...\n";
+        }
+        std::cerr << "Transmition denied at: " << size << "B\n";
+    }
+
+    if(atoi(argv[3]) == 3){
+        char buf[1] = {'\0'};
+        sendto(sock, buf, 1, 0, (struct sockaddr*) &name, sizeof name);
+        std::cerr << "Kill signal transmitted...\n";
+    }
+
     close(sock);
     exit(0);
 }
