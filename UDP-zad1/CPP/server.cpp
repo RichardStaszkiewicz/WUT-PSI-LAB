@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <cstring>
+#include <unistd.h>
 
 
 #define MAXSIZE 1024
@@ -37,10 +38,14 @@ int main()
         recvfrom(sock, buffer, MAXSIZE, 0, (struct sockaddr*)&client_addr, &addr_size);
         printf("[+]Data recv: %s\n", buffer);
 
+        if(buffer[0] == '\0') break;
+
         bzero(buffer, 1024);
         strcpy(buffer, "Welcome to the UDP Server.");
         sendto(sock, buffer, 1024, 0, (struct sockaddr*)&client_addr, sizeof(client_addr));
         printf("[+]Data send: %s\n", buffer);
     }
+    close(sock);
+    // uwalnianie deskryptora przy twardym wyjściu?
     return 0;
 }
