@@ -9,9 +9,9 @@
 #include <vector>
 
 #define DATA "LoremIpsumLoremIpsumLoremIpsum"
-#define BUFSIZE 1000000
+#define BUFSIZE 100000
 
-// client [hostname eg. ip] [hostport] [mode]
+// client [hostname eg. ip] [servport] [mode]
 int main(int argc, char *argv[])
 {
     int sock;
