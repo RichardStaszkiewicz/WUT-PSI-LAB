@@ -1,6 +1,6 @@
 import socket
 
-HOST='192.168.1.19'
+HOST='127.0.0.1'
 PORT=8000
 BUFSIZE=1024
 

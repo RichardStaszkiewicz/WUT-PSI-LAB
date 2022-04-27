@@ -35,13 +35,16 @@ int main(int argc, char *argv[])
     name.sin_port = htons( atoi( argv[2] ));
 
     if(atoi(argv[3]) == 1){
-        if(sendto(sock, DATA, sizeof DATA, 0, (struct sockaddr*) &name, sizeof name) == -1){
-            std::cerr << "Sending datagram message" <<std::endl;
-        }
         char buffer[1024];
-        socklen_t size = sizeof(name);
-        recvfrom(sock, buffer, 1024, 0, (struct sockaddr*)&name, &size);
-        printf("[+]Data recv: %s\n", buffer);
+        for(int i = 0; i < 10; i++){
+            if(sendto(sock, DATA, sizeof DATA, 0, (struct sockaddr*) &name, sizeof name) == -1){
+                std::cerr << "Sending datagram message" <<std::endl;
+            }
+            socklen_t size = sizeof(name);
+            recvfrom(sock, buffer, 1024, 0, (struct sockaddr*)&name, &size);
+            printf("[+][%d]Data recv: %s\n", i, buffer);
+            bzero(buffer, 1024);
+        }
     }
 
     if(atoi(argv[3]) == 2){

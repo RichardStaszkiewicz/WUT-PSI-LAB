@@ -1,16 +1,16 @@
 import socket
 import time
 
-HOST='192.168.1.13'
+HOST='127.0.0.1'
 PORT=9900
-SERVER = '192.168.1.19'
+SERVER = '127.0.0.1'
 PORT_S = 8000
 BUFSIZE = 1024
 
 def client():
     s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     s.bind((HOST,PORT))
-    
+
     for i in range(0,6):
         message = "abcd".encode('utf-8')
         s.sendto(message,(SERVER,PORT_S))
@@ -19,6 +19,6 @@ def client():
         time.sleep(1)
 
     s.close()
-        
+
 
 client()
