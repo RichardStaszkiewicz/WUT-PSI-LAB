@@ -30,7 +30,9 @@ int main(int argc, char *argv[])
         std::cerr << "Couldn't bind datagram socket" <<std::endl;
         exit(2);
     }
-
+    client_addr.sin_addr.s_addr = INADDR_ANY;
+    client_addr.sin_port=9900;
+    client_addr.sin_family = AF_INET;
 
     if(atoi(argv[2]) == 1){
         while(true){
