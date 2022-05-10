@@ -1,9 +1,9 @@
 import socket
 import time
 
-HOST='127.0.0.1'
+HOST='192.168.1.13'
 PORT=9900
-SERVER = '127.0.0.1'
+SERVER = '192.168.1.18'
 PORT_S = 8000
 BUFSIZE = 1024
 
