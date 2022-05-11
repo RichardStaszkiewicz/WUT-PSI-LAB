@@ -6,7 +6,7 @@ class client
 {
 public:
     client(char* host_ip, char* server_port);
-    int send_TCP_message(char* message);
+    int send_TCP_message(const void* message);
     ~client();
 private:
     struct sockaddr_in server;

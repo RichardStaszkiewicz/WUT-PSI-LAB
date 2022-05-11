@@ -3,6 +3,8 @@
 
 using namespace std;
 
+#define data "LOREM IPSUM LOREM IPSUM"
+
 // ./client [SERVER_PORT] [HOST_IP]
 int main(int argc, char* argv[])
 {
@@ -13,6 +15,6 @@ int main(int argc, char* argv[])
     else HOST_IP = (char*)"127.0.0.1";
 
     client *zad1 = new client(HOST_IP, SERVER_PORT);
-    zad1->send_TCP_message((char*)"LOREM IPSUM LOREM IPSUM");
+    zad1->send_TCP_message(data);
     return 0;
 }

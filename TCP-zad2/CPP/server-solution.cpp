@@ -15,5 +15,6 @@ int main(int argc, char* argv[])
     // Zadanie 1
     server* zad1 = new server(BUFFER_SIZE, NO_CONNECTIONS);
     zad1->new_connection();
+    delete zad1;
     return 0;
 }

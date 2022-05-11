@@ -18,12 +18,13 @@ client::client(char* host_ip, char* server_port){
     server.sin_port = htons(atoi(server_port));
 }
 
-int client::send_TCP_message(char* message)
+int client::send_TCP_message(const void* message)
 {
     if(connect(sock, (struct sockaddr *) &server, sizeof(server)) == -1){
         std::cerr << "Connection of socket failed" << std::endl; return 3;
     }
-    if(write(sock, "kdfjskfjs", sizeof("kdfjskfjs")) == -1){
+    int length = strlen((char*)message);
+    if(write(sock, message, length) == -1){
         std::cerr << "Writing on socket failed" <<std::endl; return 4;
     }
     return 0;

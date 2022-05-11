@@ -47,7 +47,7 @@ int server::new_connection()
             if(rval == 0)
                 std::cout << "ending connection" <<std::endl;
             else
-                printf("-->%s\n", buf);
+                printf("-->Message Recieved: %s\n", buf);
         }
         while(rval > 0);
         close(msgsock);
@@ -57,6 +57,6 @@ int server::new_connection()
 
 server::~server()
 {
-    std::cerr << "closing socket " <<ntohs(serv.sin_port) <<std::endl;
+    std::cerr << "closing port " <<ntohs(serv.sin_port) <<std::endl;
     close(sock);
 }

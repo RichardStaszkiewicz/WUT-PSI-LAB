@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 set(FLAGS -std=c++17 -O3 -Wall -g)
 set(CMAKE_CXX_COMPILER clang)
-# set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Debug)
 add_compile_options(${FLAGS})
 set(CMAKE_CXX_COMPILER g++)
 project(PSI_LAB2 VERSION 0.1 LANGUAGES CXX)
