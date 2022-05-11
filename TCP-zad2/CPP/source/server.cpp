@@ -51,7 +51,7 @@ int server::new_connection()
             if(rval == 0)
                 {if(interactive) std::cout << "INFO: ending connection..." <<std::endl;}
             else
-                printf("-->Message Recieved: [%dB] %s\n", rval, buf);
+                printf("-->Message Recieved: [%dB] %.*s\n", rval, rval, buf);
         }
         while(rval > 0);
         close(msgsock);
