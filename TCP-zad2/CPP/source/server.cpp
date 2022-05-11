@@ -8,7 +8,8 @@
 #include <cstring>
 #include <unistd.h>
 
-server::server(int buffer_size, int no_connections){
+server::server(int buffer_size, int no_connections, bool interact/*=true*/){
+    interactive = interact;
     BSIZE = buffer_size;
     CONNECTIONS = no_connections;
     sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -25,14 +26,17 @@ server::server(int buffer_size, int no_connections){
     if(getsockname(sock, (struct sockaddr *) &serv, (socklen_t *) &length) == -1){
         std::cerr << "getting socket name" <<std::endl;
     }
-    std::cout << "Socket port " << ntohs(serv.sin_port) <<std::endl;
+    if(interactive) std::cout << "INFO: Opened socket port " << ntohs(serv.sin_port) <<std::endl;
+    if(interactive) std::cout << "INFO: Server buffer size: " << BSIZE << "B" <<std::endl;
     listen(sock, CONNECTIONS);
+    if(interactive) std::cout << "INFO: Server connection limit: " << CONNECTIONS  <<std::endl;
 }
 
 int server::new_connection()
 {
     char buf[BSIZE];
     int rval;
+    if(interactive) std::cout << "INFO: Initiating new connection..." << std::endl;
     int msgsock = accept(sock, (struct sockaddr *) 0, (socklen_t *) 0);
     if(msgsock == -1){
         std::cerr << "Socket did not recieve anything";
@@ -45,9 +49,9 @@ int server::new_connection()
                 exit(4);
             }
             if(rval == 0)
-                std::cout << "ending connection" <<std::endl;
+                {if(interactive) std::cout << "INFO: ending connection..." <<std::endl;}
             else
-                printf("-->Message Recieved: %s\n", buf);
+                printf("-->Message Recieved: [%dB] %s\n", rval, buf);
         }
         while(rval > 0);
         close(msgsock);

@@ -13,6 +13,7 @@ int main(int argc, char* argv[])
     else NO_CONNECTIONS = 5;
 
     // Zadanie 1
+    std::cout << "----------Zadanie 1-----------\n";
     server* zad1 = new server(BUFFER_SIZE, NO_CONNECTIONS);
     zad1->new_connection();
     delete zad1;

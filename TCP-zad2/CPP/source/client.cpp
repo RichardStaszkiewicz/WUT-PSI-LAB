@@ -8,7 +8,8 @@
 #include <cstring>
 #include <unistd.h>
 
-client::client(char* host_ip, char* server_port){
+client::client(char* host_ip, char* server_port, bool interact/*=true*/){
+    interactive = interact;
     sock = socket(AF_INET, SOCK_STREAM, 0);
     if(sock == -1) {std::cerr << "Could not load descriptor" <<std::endl; exit(1);}
     server.sin_family = AF_INET;
@@ -27,10 +28,12 @@ int client::send_TCP_message(const void* message)
     if(write(sock, message, length) == -1){
         std::cerr << "Writing on socket failed" <<std::endl; return 4;
     }
+    if(interactive) std::cout << "INFO: Send Message: [" << length << "B] " << (char*)message <<std::endl;
     return 0;
 }
 
 client::~client()
 {
+    if(interactive) std::cout << "INFO: Closing Client socket..." <<std::endl;
     close(sock);
 }
