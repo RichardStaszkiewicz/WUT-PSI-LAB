@@ -7,6 +7,8 @@
 #include <iostream>
 #include <cstring>
 #include <unistd.h>
+#include <thread>
+#include <chrono>
 
 server::server(int buffer_size, int no_connections, bool interact/*=true*/){
     interactive = interact;
@@ -32,7 +34,7 @@ server::server(int buffer_size, int no_connections, bool interact/*=true*/){
     if(interactive) std::cout << "INFO: Server connection limit: " << CONNECTIONS  <<std::endl;
 }
 
-int server::new_connection()
+int server::new_connection(int milliseconds_delay)
 {
     char buf[BSIZE];
     int rval;
@@ -41,8 +43,10 @@ int server::new_connection()
     if(msgsock == -1){
         std::cerr << "Socket did not recieve anything";
     } else {
+        int payload = 0;
         do
         {
+            std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds_delay));
             memset(buf, 0, sizeof(buf));
             if((rval = read(msgsock, buf, BSIZE)) == -1){
                 std::cerr << "reading stream message failed" <<std::endl;
@@ -50,10 +54,13 @@ int server::new_connection()
             }
             if(rval == 0)
                 {if(interactive) std::cout << "INFO: ending connection..." <<std::endl;}
-            else
-                printf("-->Message Recieved: [%dB] %.*s\n", rval, rval, buf);
+            else{
+                if(interactive) printf("MESSAGE RECIEVED: [%dB] %.*s\n", rval, rval, buf);
+                payload += rval;
+            }
         }
         while(rval > 0);
+        std::cout << "Read " << payload << "B of data during the connection...\n";
         close(msgsock);
     }
     return 0;

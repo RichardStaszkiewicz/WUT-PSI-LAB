@@ -7,7 +7,7 @@ class server
 {
 public:
     server(int buffer_size, int no_connections, bool interact=true);
-    int new_connection();
+    int new_connection(int milliseconds_delay = 0);
     ~server();
 private:
     int sock;

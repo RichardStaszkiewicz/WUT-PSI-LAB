@@ -30,5 +30,16 @@ int main(int argc, char* argv[])
     zad2->send_TCP_message(data);
     delete zad2;
 
+    this_thread::sleep_for(std::chrono::seconds(3));
+
+    // Exercise 3
+    std::cout << "\n\n----------Exercise 3-----------\n";
+    char bigdata[1000];
+    for(int i = 0; i < 1000; i++) bigdata[i] = 'X';
+
+    client *zad3 = new client(HOST_IP, SERVER_PORT);
+    zad3->send_TCP_message((const void*) &bigdata, true);
+    delete zad3;
+
     return 0;
 }
