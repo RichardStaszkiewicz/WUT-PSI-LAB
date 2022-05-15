@@ -1,0 +1,28 @@
+import sys
+import socket
+
+
+# HOST='192.168.1.19'
+# PORT=8000
+# py server.py 192.168.1.19 9990
+BUFSIZE = 2
+
+def server(HOST,PORT):
+    print(f"Will listen on {HOST}:{PORT}")
+    s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    s.bind((HOST,PORT))
+    s.listen(6)
+
+    while True:
+        connection, addr = s.accept()
+        with connection:
+            print(f"Connection accepted from {addr}")
+            while True:
+                message = connection.recv(BUFSIZE)
+                if not message:
+                    break
+                print(f"Received {message.decode('utf-8')}")
+                connection.sendall((f"Server received: {message.decode('utf-8')}").encode('utf-8'))
+        print("Connection closed by client" )
+
+server(sys.argv[1],int(sys.argv[2]))
