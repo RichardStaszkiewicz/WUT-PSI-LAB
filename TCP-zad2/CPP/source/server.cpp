@@ -19,7 +19,7 @@ server::server(int buffer_size, int no_connections, bool interact/*=true*/){
 
     serv.sin_family = AF_INET;
     serv.sin_addr.s_addr = INADDR_ANY;
-    serv.sin_port = 5000;
+    serv.sin_port = htons(5000);
     if(bind(sock, (struct sockaddr *) &serv, sizeof(serv)) == -1){
         std::cerr << "binding stream socket" <<std::endl;
         exit(2);

@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
     for(int i = 0; i < 1000; i++) bigdata[i] = 'X';
 
     client *zad3 = new client(HOST_IP, SERVER_PORT);
-    zad3->send_TCP_message((const void*) &bigdata, true);
+    zad3->send_TCP_message((const void*) &bigdata, true, 5000);
     delete zad3;
 
     return 0;

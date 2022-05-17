@@ -3,7 +3,7 @@
 
 using namespace std;
 
-// ./server [buffer_size (exercise 1)] [connections]
+// ./server [buffer_size (exercise 1 & 3)] [connections]
 int main(int argc, char* argv[])
 {
     int BUFFER_SIZE, NO_CONNECTIONS;
