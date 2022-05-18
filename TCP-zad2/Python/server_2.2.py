@@ -22,7 +22,7 @@ def server(HOST,PORT,BUFSIZE=512):
                 if not message:
                     break
                 print(f"Received {message.decode('utf-8')}")
-                connection.sendall((f"Server received: {message.decode('utf-8')}").encode('utf-8'))
+                print(connection.send(message))
         print("Connection closed by client" )
        
 if len(sys.argv)==4:
