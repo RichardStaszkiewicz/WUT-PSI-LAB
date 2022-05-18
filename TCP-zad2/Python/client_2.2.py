@@ -10,7 +10,7 @@ def client(sHOST,sPORT,CPP=0):
 
     s.connect((sHOST,sPORT))
     for i in range(0,5):
-        s.sendall(f"Message {i}".encode('utf-8'))
+        print(s.send(f"Message {i}".encode('utf-8')))
         if CPP==0:
             response = s.recv(BUFSIZE)
             print(str(response.decode('utf-8')))
