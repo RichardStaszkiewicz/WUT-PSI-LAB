@@ -1,7 +1,6 @@
 import sys
 import socket
 
-
 # HOST='192.168.1.19'
 # PORT=8000
 # py server.py 192.168.1.19 8000
