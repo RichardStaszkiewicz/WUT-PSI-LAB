@@ -37,7 +37,7 @@ int client::send_TCP_message(const void* message, bool flood, int stop)
             auto end = std::chrono::high_resolution_clock::now();
             auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end-begin);
             if((i % 500 == 0) && interactive) std::cout << "INFO: Poke number " << i <<std::endl;
-            if((elapsed.count() > 5*(average/i)) && interactive && i > 100) std::cout << "INFO: Blocked for " << elapsed.count() << "ms\n";
+            if((elapsed.count() > 5*(average/i)) && interactive && i > 100) std::cout << "INFO: [" << i << "] Blocked for " << elapsed.count() << "ms\n";
             else average += elapsed.count();
         }
     }
